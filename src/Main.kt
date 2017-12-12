@@ -1,9 +1,8 @@
 package musicplayer
 
+import javazoom.jlme.util.Player
 import java.io.BufferedInputStream
 import java.io.FileInputStream
-
-import javazoom.jl.player.Player
 
 class MP3(private val filename: String) : Thread()
 {
@@ -29,7 +28,7 @@ class MP3(private val filename: String) : Thread()
     fun halt() {
         println ("Pause.")
         paused = fis.available().toLong()
-        player!!.close()
+        player!!.stop()
         player = null
     }
 
@@ -42,40 +41,12 @@ class MP3(private val filename: String) : Thread()
         player!!.play()
     }
 
-    fun done(): Boolean = player?.isComplete ?: false
-
-    fun position() = if (player != null) fis.channel.position() else 0
-
-    fun time(): Int = player?.position ?: 0
-
 }
 
 fun main(args: Array<String>)
 {
-    val mp3 = MP3("/home/steve/Music/#SymphonicRock/Delain/Delain - The Human Contradiction - 06 - Sing to Me.mp3")
+    val mp3 = MP3("u:\\music.mp3")
     mp3.start()
-
-    while (true) {
-        val pos = mp3.position()
-        val time = mp3.time()
-        println("$pos bytes ($time ms)")
-        Thread.sleep(1000)
-
-        if (mp3.done()) break
-
-        if (time in 3000..4000) {
-            mp3.halt()
-            Thread.sleep(3000)
-            mp3.unpause()
-        }
-    }
-
-    println ("End.")
-
-
-
-
-
 
 
 }
