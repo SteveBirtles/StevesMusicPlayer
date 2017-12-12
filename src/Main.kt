@@ -45,7 +45,7 @@ class MP3(private val filename: String) : Thread()
 
 fun main(args: Array<String>)
 {
-    val mp3 = MP3("u:\\music.mp3")
+    val mp3 = MP3("Resources/music.mp3")
     mp3.start()
 
 
